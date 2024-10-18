@@ -1,29 +1,39 @@
 
 /** NGameVoiceAccessibility::CManager::Update
 
-can nop the call okay
-
-Trackmania.exe+D7EFC4 - 89 B5 80000000        - mov [rbp+00000080],esi
-Trackmania.exe+D7EFCA - 4D 8B E9              - mov r13,r9
-Trackmania.exe+D7EFCD - 4D 8B F0              - mov r14,r8
-Trackmania.exe+D7EFD0 - E8 6B9938FF           - call Trackmania.exe+108940 { NGameVoiceAccessibility::CManager::Update
- }
-Trackmania.exe+D7EFD5 - 48 8B 85 28010000     - mov rax,[rbp+00000128]
-Trackmania.exe+D7EFDC - 89 30                 - mov [rax],esi
-Trackmania.exe+D7EFDE - 8B 85 20010000        - mov eax,[rbp+00000120]
-
+Trackmania.exe+D7F00B - 48 89 BC 24 C8010000  - mov [rsp+000001C8],rdi
+Trackmania.exe+D7F013 - 48 8B CB              - mov rcx,rbx
+Trackmania.exe+D7F016 - 4C 89 A4 24 C0010000  - mov [rsp+000001C0],r12
+Trackmania.exe+D7F01E - 4C 89 BC 24 B8010000  - mov [rsp+000001B8],r15
+Trackmania.exe+D7F026 - E8 45F0FFFF           - call Trackmania.exe+D7E070
+Trackmania.exe+D7F02B - 48 8B CB              - mov rcx,rbx
+Trackmania.exe+D7F02E - E8 1DE5FFFF           - call Trackmania.exe+D7D550
+Trackmania.exe+D7F033 - 85 C0                 - test eax,eax
+Trackmania.exe+D7F035 - 0F84 10080000         - je Trackmania.exe+D7F84B { je -> jmp to skip }
 
 
-89 B5 80 00 00 00 4D 8B E9 4D 8B F0 E8 6B 99 38 FF 48 8B 85 28 01 00 00 89 30 8B 85 20 01 00 00
-89 B5 ?? 00 00 00 4D 8B ?? 4D 8B ?? E8 ?? ?? ?? ?? 48 8B 85 ?? ?? 00 00 89 30 8B 85 20 01 00 00
-vv unique
-89 B5 ?? 00 00 00 4D 8B ?? 4D 8B ?? E8 ?? ?? ?? ?? 48 8B 85 ?? ?? 00 00
+change last to:
+Trackmania.exe+D7F035 - E9 11080000           - jmp Trackmania.exe+D7F84B { je -> jmp to skip }
+Trackmania.exe+D7F03A - 90                    - nop
+
+
+
+E8 45 F0 FF FF 48 8B CB E8 1D E5 FF FF 85 C0 0F 84 10 08 00 00 65 48 8B 04 25 58 00 00 00
+E8 ?? ?? ?? ?? 48 8B CB E8 ?? ?? ?? ?? 85 C0 0F 84 10 08 00 00 65 48 8B 04 25 58 00 00 00
+
+unique:
+E8 ?? ?? ?? ?? 48 8B CB E8 ?? ?? ?? ?? 85 C0 0F 84 10 08 00 00
+E8 ?? ?? ?? ?? 48 8B CB E8 ?? ?? ?? ?? 85 C0 E9 11 08 00 00 90
+
+
+45 / 3 = 15
+
 
 
  */
 
-const string NGameVoiceAccessMgrUpdate_Pattern = "89 B5 ?? 00 00 00 4D 8B ?? 4D 8B ?? E8 ?? ?? ?? ?? 48 8B 85 ?? ?? 00 00";
-const uint offset = 12;
+const string NGameVoiceAccessMgrUpdate_Pattern = "E8 ?? ?? ?? ?? 48 8B CB E8 ?? ?? ?? ?? 85 C0 0F 84 10 08 00 00";
+const uint offset = 15;
 
 string[] origBytes;
 uint64[] callPtr;
@@ -40,7 +50,7 @@ void Main() {
         return;
     }
     callPtr[0] += offset;
-    origBytes.InsertLast(Dev::Patch(callPtr[0], "90 90 90 90 90"));
+    origBytes.InsertLast(Dev::Patch(callPtr[0], "E9 11 08 00 00 90"));
 
     UI::ShowNotification(
         Meta::ExecutingPlugin().Name,
