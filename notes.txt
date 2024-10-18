@@ -1,0 +1,51 @@
+the instance to nop is the 1st one
+
+first instance of EnumDevices in exe
+
+Trackmania.exe.text+265EE8 - 48 83 C6 08           - add rsi,08 { 8 }
+Trackmania.exe.text+265EEC - 49 83 EE 01           - sub r14,01 { 1 }
+Trackmania.exe.text+265EF0 - 75 BE                 - jne Trackmania.exe.text+265EB0
+Trackmania.exe.text+265EF2 - 48 39 AF F8180000     - cmp [rdi+000018F8],rbp
+
+Trackmania.exe.text+265EF9 - 74 4F                 - je Trackmania.exe.text+265F4A
+Trackmania.exe.text+265EFB - 39 AF 1C190000        - cmp [rdi+0000191C],ebp
+Trackmania.exe.text+265F01 - 74 47                 - je Trackmania.exe.text+265F4A
+Trackmania.exe.text+265F03 - 48 8D 15 26038601     - lea rdx,[Trackmania.exe.rdata+1E8230] { ("EnumDevices") }
+Trackmania.exe.text+265F0A - 89 6C 24 40           - mov [rsp+40],ebp
+Trackmania.exe.text+265F0E - 48 8D 4C 24 30        - lea rcx,[rsp+30]
+
+Trackmania.exe.text+265F13 - E8 6806EAFF           - call Trackmania.exe.text+106580
+Trackmania.exe.text+265F18 - 48 8B 8F F8180000     - mov rcx,[rdi+000018F8]
+Trackmania.exe.text+265F1F - 4C 8D 05 BAFBFFFF     - lea r8,[Trackmania.exe.text+265AE0] { (1220709192) }
+Trackmania.exe.text+265F26 - 4C 8B CF              - mov r9,rdi
+Trackmania.exe.text+265F29 - C7 44 24 20 01000000  - mov [rsp+20],00000001 { 1 }
+Trackmania.exe.text+265F31 - BA 04000000           - mov edx,00000004 { 4 }
+Trackmania.exe.text+265F36 - 48 8B 01              - mov rax,[rcx]
+Trackmania.exe.text+265F39 - FF 50 20              - call qword ptr [rax+20]
+Trackmania.exe.text+265F3C - 8B 54 24 40           - mov edx,[rsp+40]
+Trackmania.exe.text+265F40 - 48 8D 4C 24 30        - lea rcx,[rsp+30]
+Trackmania.exe.text+265F45 - E8 4606EAFF           - call Trackmania.exe.text+106590
+
+
+second instance
+
+Trackmania.exe.text+2663D5 - 44 39 A3 14190000     - cmp [rbx+00001914],r12d
+Trackmania.exe.text+2663DC - 74 08                 - je Trackmania.exe.text+2663E6
+Trackmania.exe.text+2663DE - 48 8B CB              - mov rcx,rbx
+Trackmania.exe.text+2663E1 - E8 FAA90000           - call Trackmania.exe.text+270DE0
+Trackmania.exe.text+2663E6 - 44 39 A3 1C190000     - cmp [rbx+0000191C],r12d
+Trackmania.exe.text+2663ED - 74 44                 - je Trackmania.exe.text+266433
+Trackmania.exe.text+2663EF - 48 8D 15 3AFE8501     - lea rdx,[Trackmania.exe.rdata+1E8230] { ("EnumDevices") }
+Trackmania.exe.text+2663F6 - 44 89 65 E0           - mov [rbp-20],r12d
+Trackmania.exe.text+2663FA - 48 8D 4D D0           - lea rcx,[rbp-30]
+Trackmania.exe.text+2663FE - E8 7D01EAFF           - call Trackmania.exe.text+106580
+Trackmania.exe.text+266403 - 48 8B 8B F8180000     - mov rcx,[rbx+000018F8]
+Trackmania.exe.text+26640A - 4C 8D 05 CFF6FFFF     - lea r8,[Trackmania.exe.text+265AE0] { (1220709192) }
+Trackmania.exe.text+266411 - 4C 8B CB              - mov r9,rbx
+Trackmania.exe.text+266414 - C7 44 24 20 01000000  - mov [rsp+20],00000001 { 1 }
+Trackmania.exe.text+26641C - BA 04000000           - mov edx,00000004 { 4 }
+Trackmania.exe.text+266421 - 48 8B 01              - mov rax,[rcx]
+Trackmania.exe.text+266424 - FF 50 20              - call qword ptr [rax+20]
+Trackmania.exe.text+266427 - 8B 55 E0              - mov edx,[rbp-20]
+Trackmania.exe.text+26642A - 48 8D 4D D0           - lea rcx,[rbp-30]
+Trackmania.exe.text+26642E - E8 5D01EAFF           - call Trackmania.exe.text+106590
