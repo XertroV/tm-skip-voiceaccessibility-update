@@ -1,5 +1,5 @@
 [meta]
-name     = "Skip EnumDevices Patch"
+name     = "Skip NGameVoiceAccessibility::CManager::Update"
 author   = "XertroV"
 category = "Fixes"
 version  = "0.1.0"
